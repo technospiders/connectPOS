@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using POS.Data;
 using POS.Data.Dto;
+using POS.Data.Dto.SalesOrder;
 using POS.Helper;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,11 @@ namespace POS.MediatR.SalesOrder.Commands
         public decimal TotalTax { get; set; }
         public decimal TotalDiscount { get; set; }
         public List<SalesOrderItemDto> SalesOrderItems { get; set; }
+
+
+        // Logistics-specific data
+        public bool IsLogisticsOrder { get; set; }
+        public SaleOrderDetailDto LogisticsSaleOrderDetail { get; set; }
+        public List<SaleOrderProductsItemsDto> LogisticsSaleOrderProductsItems { get; set; }
     }
 }

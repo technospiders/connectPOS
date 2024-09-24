@@ -25,5 +25,10 @@ namespace POS.Data.Dto
         public List<SalesOrderItemDto> SalesOrderItems { get; set; }
         public List<SalesOrderPaymentDto> SalesOrderPayments { get; set; }
         public CustomerDto Customer { get; set; }
+
+        // Logistics-specific data
+        public bool IsLogisticsOrder { get; set; }
+        public SaleOrderDetailDto LogisticsSaleOrderDetail { get; set; }
+
     }
 }

@@ -28,6 +28,7 @@ namespace POS.Domain
         public DbSet<City> Cities { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SupplierAddress> SupplierAddresses { get; set; }
+        public DbSet<ConsigneeAddress> ConsigneeAddresses { get; set; }
         public DbSet<ContactRequest> ContactRequests { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Testimonials> Testimonials { get; set; }
@@ -40,9 +41,11 @@ namespace POS.Domain
         public DbSet<QuarterlyReminder> QuarterlyReminders { get; set; }
         public DbSet<DailyReminder> DailyReminders { get; set; }
         public DbSet<SendEmail> SendEmails { get; set; }
+        public DbSet<PackingType> PackingTypes { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public DbSet<PurchaseOrderItemTax> PurchaseOrderItemTaxes { get; set; }
+        public DbSet<ReasonForExport> ReasonForExports { get; set; }
         public DbSet<SalesOrder> SalesOrders { get; set; }
         public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
         public DbSet<SalesOrderItemTax> SalesOrderItemTaxes { get; set; }
@@ -70,8 +73,18 @@ namespace POS.Domain
         public DbSet<UnitConversation> UnitConversations { get; set; }
         public DbSet<WarehouseInventory> WarehouseInventories { get; set; }
 
+        public DbSet<WeightUnit> WeightUnits { get; set; }
+        public DbSet<VehicleType> VehicleTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+         //   builder.Entity<ReasonForExport>()
+         //.ToTable("ReasonForExport", "logistics");  // Specify schema
+
+         //   builder.Entity<PackingType>()
+         //       .ToTable("PackingType", "logistics");  // Specify schema
+
+
             base.OnModelCreating(builder);
 
             builder.Entity<User>(b =>
@@ -225,6 +238,45 @@ namespace POS.Domain
                   .HasForeignKey(rc => rc.ShippingAddressId)
                   .OnDelete(DeleteBehavior.Restrict);
             });
+            
+
+            builder.Entity<Consignee>(b =>
+            {
+                b.HasOne(c => c.Customer)
+                   .WithMany(c => c.Consignees)  // Assuming a Customer can have multiple Consignees
+                   .HasForeignKey(c => c.CustomerId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasOne(e => e.CreatedByUser)
+                    .WithMany()
+                    .HasForeignKey(ur => ur.CreatedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.ModifiedByUser)
+                    .WithMany()
+                    .HasForeignKey(rc => rc.ModifiedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.DeletedByUser)
+                    .WithMany()
+                    .HasForeignKey(rc => rc.DeletedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.ConsigneeAddress)
+                  .WithMany()
+                  .HasForeignKey(rc => rc.ConsigneeAddressId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.BillingAddress)
+                  .WithMany()
+                  .HasForeignKey(rc => rc.BillingAddressId)
+                  .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.ShippingAddress)
+                  .WithMany()
+                  .HasForeignKey(rc => rc.ShippingAddressId)
+                  .OnDelete(DeleteBehavior.Restrict);
+            });
 
             builder.Entity<Testimonials>(b =>
             {
@@ -245,6 +297,22 @@ namespace POS.Domain
             });
 
             builder.Entity<ProductCategory>(b =>
+            {
+                b.HasOne(e => e.CreatedByUser)
+                    .WithMany()
+                    .HasForeignKey(ur => ur.CreatedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<ReasonForExport>(b =>
+            {
+                b.HasOne(e => e.CreatedByUser)
+                    .WithMany()
+                    .HasForeignKey(ur => ur.CreatedBy)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<PackingType>(b =>
             {
                 b.HasOne(e => e.CreatedByUser)
                     .WithMany()
@@ -446,6 +514,61 @@ namespace POS.Domain
                     .WithMany()
                     .HasForeignKey(ur => ur.CreatedBy)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+
+
+            // New configuration for the one-to-one relationship between SalesOrder and SaleOrderDetail
+            builder.Entity<SalesOrder>(b =>
+            {
+                // Configuring one-to-one relationship with SaleOrderDetail
+                b.HasOne(s => s.LogisticsSaleOrderDetail)
+                    .WithOne(d => d.SalesOrder)
+                    .HasForeignKey<SaleOrderDetail>(d => d.SaleOrderID) // ForeignKey in SaleOrderDetail
+                    .OnDelete(DeleteBehavior.Cascade); // You can choose Restrict or SetNull based on your business logic
+            });
+
+            builder.Entity<SaleOrderDetail>(b =>
+            {
+                b.HasOne(e => e.Consignee)
+                    .WithMany() // Assuming many sale orders can have the same consignee
+                    .HasForeignKey(d => d.ConsigneeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.PackingType)
+                    .WithMany()
+                    .HasForeignKey(d => d.PackingTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.WeightUnit)
+                    .WithMany()
+                    .HasForeignKey(d => d.WeightId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.ReasonForExport)
+                    .WithMany()
+                    .HasForeignKey(d => d.ReasonForExportId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                b.HasOne(e => e.VehicleType)
+                    .WithMany()
+                    .HasForeignKey(d => d.VehicleTypeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // Configuration for SaleOrderProductsItems
+            builder.Entity<SaleOrderProductsItems>(b =>
+            {
+                b.HasOne(p => p.SaleOrderDetail) // Each SaleOrderProductsItems is linked to one SaleOrderDetail
+                    .WithMany(d => d.LogisticsSaleOrderProductsItems) // SaleOrderDetail can have many SaleOrderProductsItems
+                    .HasForeignKey(p => p.SaleOrderDetailId) // ForeignKey in SaleOrderProductsItems
+                    .OnDelete(DeleteBehavior.Cascade); // Optional: Cascade delete
+
+                // Modify the CreatedBy foreign key to prevent multiple cascade paths
+                b.HasOne(p => p.CreatedByUser)
+                    .WithMany()
+                    .HasForeignKey(p => p.CreatedBy)
+                    .OnDelete(DeleteBehavior.Restrict); // Use Restrict or SetNull to avoid multiple cascade paths
+
             });
 
             builder.Entity<Data.Page>(b =>

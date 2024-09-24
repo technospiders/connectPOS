@@ -5,6 +5,7 @@ using POS.MediatR.CommandAndQuery;
 using POS.MediatR.PurchaseOrder.Commands;
 using POS.MediatR.SalesOrder.Commands;
 using POS.MediatR.SalesOrderPayment.Command;
+using POS.Data.Entities;
 
 namespace POS.API.Helpers.Mapping
 {
@@ -20,6 +21,18 @@ namespace POS.API.Helpers.Mapping
             CreateMap<UpdateSalesOrderCommand, SalesOrder>();
             CreateMap<SalesOrderPayment,SalesOrderPaymentDto>().ReverseMap();
             CreateMap<AddSalesOrderPaymentCommand, SalesOrderPayment>();
+
+
+
+            CreateMap<SaleOrderDetail, SaleOrderDetailDto>().ReverseMap();
+            CreateMap<SalesOrder, SalesOrderDto>()
+                .ForMember(dest => dest.LogisticsSaleOrderDetail, opt => opt.MapFrom(src => src.LogisticsSaleOrderDetail))
+                .ReverseMap();
+
+            // Mapping for SalesOrder including the SaleOrderDetail
+            CreateMap<SaleOrderDetail, SaleOrderDetailDto>()
+                .ForMember(dest => dest.LogisticsSaleOrderProductsItems, opt => opt.MapFrom(src => src.LogisticsSaleOrderProductsItems))
+                .ReverseMap();
         }
     }
 }

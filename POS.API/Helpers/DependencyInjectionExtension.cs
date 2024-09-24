@@ -1,6 +1,7 @@
 ﻿using POS.Common.UnitOfWork;
 using POS.Repository;
 using Microsoft.Extensions.DependencyInjection;
+using POS.Data;
 
 namespace POS.API.Helpers
 {
@@ -28,6 +29,7 @@ namespace POS.API.Helpers
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<INewsletterSubscriberRepository, NewsletterSubscriberRepository>();
             services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IConsigneeRepository, ConsigneeRepository>();
             services.AddScoped<ITestimonialsRepository, TestimonialsRepository>();
             services.AddScoped<IReminderNotificationRepository, ReminderNotificationRepository>();
             services.AddScoped<IReminderRepository, ReminderRepository>();
@@ -71,6 +73,14 @@ namespace POS.API.Helpers
             services.AddScoped<IInventoryHistoryRepository, InventoryHistoryRepository>();
             services.AddScoped<IUnitConversationRepository, UnitConversationRepository>();
             services.AddScoped<IWarehouseInventoryRepository, WarehouseInventoryRepository>();
+
+
+            services.AddScoped<IWeightUnitRepository, WeightUnitRepository>();
+            services.AddScoped<IVehicleTypeRepository, VehicleTypeRepository>();
+
+            //Logistics
+            services.AddScoped<IPackingTypeRepository, PackingTypeRepository>();
+            services.AddScoped<IReasonForExportRepository, ReasonForExportRepository>();
 
         }
     }

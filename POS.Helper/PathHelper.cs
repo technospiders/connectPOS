@@ -67,6 +67,15 @@ namespace POS.Helper
                 return _configuration["ImagePathSettings:SupplierImages"];
             }
         }
+        
+
+        public string ConsigneeImagePath
+        {
+            get
+            {
+                return _configuration["ImagePathSettings:ConsigneeImages"];
+            }
+        }
 
         public string ArticleBannerImagePath
         {

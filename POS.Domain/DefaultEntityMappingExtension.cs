@@ -110,6 +110,9 @@ namespace POS.Domain
             modelBuilder.Entity<Customer>()
                .HasQueryFilter(p => !p.IsDeleted);
 
+            modelBuilder.Entity<Consignee>()
+               .HasQueryFilter(p => !p.IsDeleted);
+
             modelBuilder.Entity<Testimonials>()
                 .HasQueryFilter(p => !p.IsDeleted);
 

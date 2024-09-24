@@ -57,7 +57,9 @@ namespace POS.Repository
                     ContactPerson = c.ContactPerson,
                     MobileNo = c.MobileNo,
                     Website = c.Website,
-                    IsWalkIn = c.IsWalkIn
+                    IsWalkIn = c.IsWalkIn,
+                    Address = c.Address,
+                    CountryName = c.CountryName
                 })
                 .ToListAsync();
             return entities;

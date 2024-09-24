@@ -89,6 +89,7 @@ namespace POS.API
                         builder.WithOrigins("http://localhost:4000",
                                             "http://localhost:4200",
                                              "http://localhost:4201",
+                                             "https://flylinkcourier.technospiders.net",
                                              "https://foodiebites.technospiders.net",
                                              "https://www.foodiebites.technospiders.net",
                                              "http://foodiebites.technospiders.net",

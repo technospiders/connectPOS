@@ -61,6 +61,21 @@ namespace POS.Repository
                        { "BusinessType", new PropertyMappingValue(new List<string>() { "BusinessType" } )}
               };
 
+        private Dictionary<string, PropertyMappingValue> _consigneePropertyMapping =
+              new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+              {
+                       { "Id", new PropertyMappingValue(new List<string>() { "Id" } ) },
+                       { "ConsigneeName", new PropertyMappingValue(new List<string>() { "ConsigneeName" } )},
+                       { "ContactPerson", new PropertyMappingValue(new List<string>() { "ContactPerson" } )},
+                       { "Email", new PropertyMappingValue(new List<string>() { "Email" } )},
+                       { "MobileNo", new PropertyMappingValue(new List<string>() { "MobileNo" } )},
+                       { "PhoneNo", new PropertyMappingValue(new List<string>() { "PhoneNo" } )},
+                       { "Website", new PropertyMappingValue(new List<string>() { "Website" } )},
+                       { "IsVarified", new PropertyMappingValue(new List<string>() { "IsVarified" } )},
+                       { "IsUnsubscribe", new PropertyMappingValue(new List<string>() { "IsUnsubscribe" } )},
+                       { "BusinessType", new PropertyMappingValue(new List<string>() { "BusinessType" } )}
+              };
+
         private Dictionary<string, PropertyMappingValue> _customerPropertyMapping =
           new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
           {
@@ -287,6 +302,7 @@ namespace POS.Repository
             propertyMappings.Add(new PropertyMapping<UserDto, User>(_userMapping));
             propertyMappings.Add(new PropertyMapping<NLogDto, NLog>(_nLogMapping));
             propertyMappings.Add(new PropertyMapping<SupplierDto, Supplier>(_supplierPropertyMapping));
+            propertyMappings.Add(new PropertyMapping<ConsigneeDto, Consignee>(_consigneePropertyMapping));
             propertyMappings.Add(new PropertyMapping<CustomerDto, Customer>(_customerPropertyMapping));
             propertyMappings.Add(new PropertyMapping<ContactUsDto, ContactRequest>(_contactUsPropertyMapping));
             propertyMappings.Add(new PropertyMapping<ReminderDto, Reminder>(_reminderMapping));

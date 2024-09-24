@@ -12,6 +12,7 @@ namespace POS.Data.Resources
         public string CustomerName { get; set; }
         public DateTime? SOCreatedDate { get; set; }
         public Guid? CustomerId { get; set; }
+        //public Guid? ConsigneeId { get; set; }  // New filter option for ConsigneeId
         public bool IsSalesOrderRequest { get; set; } = false;
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }

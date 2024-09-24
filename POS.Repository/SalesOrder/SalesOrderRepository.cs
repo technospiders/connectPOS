@@ -44,6 +44,12 @@ namespace POS.Repository
                     .Where(a => a.CustomerId == salesOrderResource.CustomerId);
             }
 
+            //if (salesOrderResource.ConsigneeId.HasValue)
+            //{
+            //    collectionBeforePaging = collectionBeforePaging
+            //        .Where(a => a.ConsigneeId == salesOrderResource.ConsigneeId);
+            //}
+
             if (salesOrderResource.ProductId.HasValue)
             {
                 collectionBeforePaging = collectionBeforePaging
@@ -86,5 +92,6 @@ namespace POS.Repository
             return await salesOrders
                 .Create(collectionBeforePaging, salesOrderResource.Skip, salesOrderResource.PageSize);
         }
+
     }
 }

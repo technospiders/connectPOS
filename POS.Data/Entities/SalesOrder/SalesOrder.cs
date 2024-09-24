@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POS.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,7 @@ namespace POS.Data
         public DeliveryStatus DeliveryStatus { get; set; }
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
         public decimal TotalTax { get; set; }
@@ -26,6 +28,11 @@ namespace POS.Data
         public PaymentStatus PaymentStatus { get; set; }
         public List<SalesOrderItem> SalesOrderItems { get; set; }
         public List<SalesOrderPayment> SalesOrderPayments { get; set; }
+
+
+        // Properties for Logistics
+        public bool IsLogisticsOrder { get; set; }
+        public SaleOrderDetail LogisticsSaleOrderDetail { get; set; }
 
     }
 }

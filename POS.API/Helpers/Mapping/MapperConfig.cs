@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using POS.Data;
 
 namespace POS.API.Helpers.Mapping
 {
@@ -21,11 +22,16 @@ namespace POS.API.Helpers.Mapping
                 mc.AddProfile(new NewsletterSubscriberProfile());
                 mc.AddProfile(new CityProfile());
                 mc.AddProfile(new SupplierProfile());
+                mc.AddProfile(new ConsigneeProfile());
                 mc.AddProfile(new ContactUsMapping());
 
                 mc.AddProfile(new ReminderProfile());
                 mc.AddProfile(new PurchaseOrderProfile());
                 mc.AddProfile(new SalesOrderProfile());
+
+
+                mc.AddProfile(new SalesOrderMappingProfile());
+
 
                 mc.AddProfile(new CompanyProfileProfile());
                 mc.AddProfile(new ExpenseProfile());
@@ -48,6 +54,13 @@ namespace POS.API.Helpers.Mapping
                 mc.AddProfile(new BrandProfile());
 
                 mc.AddProfile(new InventoryProfle());
+
+
+                mc.AddProfile(new ReasonForExportProfile());
+                mc.AddProfile(new PackingTypeProfile());
+
+                mc.AddProfile(new VehicleTypeProfile());
+                mc.AddProfile(new WeightUnitProfile());
             });
             return mappingConfig.CreateMapper();
         }

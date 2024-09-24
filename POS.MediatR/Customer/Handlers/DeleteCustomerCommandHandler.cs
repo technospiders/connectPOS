@@ -16,17 +16,20 @@ namespace POS.MediatR.Handlers
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly ISalesOrderRepository _salesOrderRepository;
+        private readonly IConsigneeRepository _consigneeRepository;
         private readonly IUnitOfWork<POSDbContext> _uow;
         private readonly ILogger<DeleteCustomerCommandHandler> _logger;
 
         public DeleteCustomerCommandHandler(
             ICustomerRepository customerRepository,
             ISalesOrderRepository salesOrderRepository,
+            IConsigneeRepository consigneeRepository,
             IUnitOfWork<POSDbContext> uow,
             ILogger<DeleteCustomerCommandHandler> logger)
         {
             _customerRepository = customerRepository;
             _salesOrderRepository = salesOrderRepository;
+            _consigneeRepository = consigneeRepository;
             _uow = uow;
             _logger = logger;
         }
@@ -53,6 +56,15 @@ namespace POS.MediatR.Handlers
                 _logger.LogError("Customer can not be Deleted because it is use in Sales Order");
                 return ServiceResponse<bool>.Return409("Customer can not be Deleted because it is use in Sales Order");
             }
+
+            var exitingConsginee = _consigneeRepository.All.Any(c => c.CustomerId == entityExist.Id);
+            if (exitingConsginee)
+            {
+                _logger.LogError("Customer can not be Deleted because it is use in Consignee");
+                return ServiceResponse<bool>.Return409("Customer can not be Deleted because it is use in Consignee");
+            }
+
+
             _customerRepository.Delete(entityExist);
 
             if (await _uow.SaveAsync() <= 0)

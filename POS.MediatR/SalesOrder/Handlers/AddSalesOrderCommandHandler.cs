@@ -57,6 +57,7 @@ namespace POS.MediatR.Handlers
                 item.SalesOrderItemTaxes.ForEach(tax => { tax.Tax = null; });
                 item.CreatedDate = DateTime.UtcNow;
             });
+
             _salesOrderRepository.Add(salesOrder);
 
 

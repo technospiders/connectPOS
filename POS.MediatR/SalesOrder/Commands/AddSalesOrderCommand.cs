@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using POS.Data;
 using POS.Data.Dto;
+using POS.Data.Dto.SalesOrder;
 using POS.Helper;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,14 @@ namespace POS.MediatR.CommandAndQuery
         public DateTime DeliveryDate { get; set; }
         public DeliveryStatus DeliveryStatus { get; set; }
         public Guid CustomerId { get; set; }
+        //public Guid? ConsigneeId { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal TotalTax { get; set; }
         public decimal TotalDiscount { get; set; }
         public List<SalesOrderItemDto> SalesOrderItems { get; set; }
+
+        // Logistics-specific data
+        public bool IsLogisticsOrder { get; set; }
+        public SaleOrderDetailDto LogisticsSaleOrderDetail { get; set; }  
     }
 }

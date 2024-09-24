@@ -63,6 +63,14 @@ namespace POS.Repository
                  SOCreatedDate = cs.SOCreatedDate,
                  OrderNumber = cs.OrderNumber,
                  CustomerId = cs.CustomerId,
+
+                 // Include Consignee details if they exist
+                 IsLogisticsOrder = cs.IsLogisticsOrder,
+                 
+                 //// Include Consignee details if they exist
+                 //ConsigneeId = cs.ConsigneeId,
+                 //ConsigneeName = cs.Consignee != null ? cs.Consignee.ConsigneeName : null,
+
                  TotalAmount = cs.TotalAmount,
                  TotalDiscount = cs.TotalDiscount,
                  DeliveryStatus = cs.DeliveryStatus,
@@ -89,6 +97,7 @@ namespace POS.Repository
                   OrderNumber = cs.OrderNumber,
                   CustomerId = cs.CustomerId,
                   TotalAmount = cs.TotalAmount,
+                  IsLogisticsOrder = cs.IsLogisticsOrder,
                   TotalDiscount = cs.TotalDiscount,
                   DeliveryStatus = cs.DeliveryStatus,
                   DeliveryDate = cs.DeliveryDate,

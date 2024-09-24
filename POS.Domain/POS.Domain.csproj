@@ -30,4 +30,10 @@
     <ProjectReference Include="..\POS.Data\POS.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Migrations\20240922113946_InsertCountriesCitiesData.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

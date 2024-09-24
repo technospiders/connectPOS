@@ -47,7 +47,7 @@ namespace POS.MediatR.Handlers
                 cities = await _cityRepository.All
                         .OrderBy(c => c.CityName)
                         .Where(c => c.CountryId == countryId)
-                        .Take(100)
+                        //.Take(100)
                         .ProjectTo<CityDto>(_mapper.ConfigurationProvider)
                         .ToListAsync();
             }
@@ -56,7 +56,7 @@ namespace POS.MediatR.Handlers
                 cities = await _cityRepository.All
                         .OrderBy(c => c.CityName)
                         .Where(c => c.CountryId == countryId && EF.Functions.Like(c.CityName, $"{request.CityName}%"))
-                        .Take(100)
+                        //.Take(100)
                         .ProjectTo<CityDto>(_mapper.ConfigurationProvider)
                         .ToListAsync();
             }

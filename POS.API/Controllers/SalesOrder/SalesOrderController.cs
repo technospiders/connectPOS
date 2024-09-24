@@ -38,7 +38,7 @@ namespace POS.API.Controllers.SalesOrder
         [Produces("application/json", "application/xml", Type = typeof(List<SalesOrderDto>))]
         public async Task<IActionResult> GetAllSalesOrder([FromQuery] SalesOrderResource salesOrderResource)
         {
-            var getAllSalesOrderQuery = new GetAllSalesOrderCommand
+            var getAllSalesOrderQuery = new GetAllSalesOrderCommand 
             {
                 SalesOrderResource = salesOrderResource
             };
@@ -87,6 +87,11 @@ namespace POS.API.Controllers.SalesOrder
         [Produces("application/json", "application/xml", Type = typeof(SalesOrderDto))]
         public async Task<IActionResult> CreateSalesOrder(AddSalesOrderCommand addSalesOrderCommand)
         {
+            if (addSalesOrderCommand.IsLogisticsOrder && addSalesOrderCommand.LogisticsSaleOrderDetail == null)
+            {
+                return BadRequest("Logistics details must be provided for logistics orders.");
+            }
+
             var result = await _mediator.Send(addSalesOrderCommand);
             return ReturnFormattedResponse(result);
         }
@@ -101,6 +106,12 @@ namespace POS.API.Controllers.SalesOrder
         [Produces("application/json", "application/xml", Type = typeof(SalesOrderDto))]
         public async Task<IActionResult> UpdateSalesOrder(Guid id, UpdateSalesOrderCommand updateSalesOrderCommand)
         {
+            updateSalesOrderCommand.Id = id;
+            if (updateSalesOrderCommand.IsLogisticsOrder && updateSalesOrderCommand.LogisticsSaleOrderDetail == null)
+            {
+                return BadRequest("Logistics details must be provided for logistics orders.");
+            }
+
             var result = await _mediator.Send(updateSalesOrderCommand);
             return ReturnFormattedResponse(result);
         }

@@ -38,6 +38,22 @@ namespace POS.MediatR.Handlers
                     .ThenInclude(c => c.Product)
                 .Include(c => c.SalesOrderItems)
                     .ThenInclude(c => c.UnitConversation)
+                // Include the Logistics-specific details
+                .Include(c => c.LogisticsSaleOrderDetail) // Include SaleOrderDetail
+                    .ThenInclude(l => l.Consignee) // Include the Consignee in SaleOrderDetail
+                    .ThenInclude(l => l.ConsigneeAddress) // Include the ConsigneeAddresses in Consignee
+                .Include(c => c.LogisticsSaleOrderDetail)
+                    .ThenInclude(l => l.PackingType) // Include PackingType
+                //.Include(c => c.LogisticsSaleOrderDetail)
+                //    .ThenInclude(l => l.WeightUnit) // Include WeightUnit
+                .Include(c => c.LogisticsSaleOrderDetail)
+                    .ThenInclude(l => l.ReasonForExport) // Include ReasonForExport
+                .Include(c => c.LogisticsSaleOrderDetail)
+                    .ThenInclude(l => l.Currency) // Include Currency
+                //.Include(c => c.LogisticsSaleOrderDetail)
+                //    .ThenInclude(l => l.VehicleType) // Include VehicleType
+                .Include(c => c.LogisticsSaleOrderDetail)
+                    .ThenInclude(l => l.LogisticsSaleOrderProductsItems)
                 .Where(c => c.Id == request.Id)
                 .FirstOrDefaultAsync();
             if (entity == null)

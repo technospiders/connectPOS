@@ -114,6 +114,7 @@ namespace POS.MediatR.Handlers
             salesOrderExit.Note = salesOrderUpdate.Note;
             salesOrderExit.TermAndCondition = salesOrderUpdate.TermAndCondition;
             salesOrderExit.IsSalesOrderRequest = salesOrderUpdate.IsSalesOrderRequest;
+            salesOrderExit.IsLogisticsOrder = salesOrderUpdate.IsLogisticsOrder;
             salesOrderExit.SOCreatedDate = salesOrderUpdate.SOCreatedDate;
             salesOrderExit.Status = salesOrderUpdate.Status;
             salesOrderExit.DeliveryDate = salesOrderUpdate.DeliveryDate;

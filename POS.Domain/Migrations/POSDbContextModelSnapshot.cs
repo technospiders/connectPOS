@@ -183,6 +183,9 @@ namespace POS.Domain.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("InvoicePrintSize")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -206,6 +209,145 @@ namespace POS.Domain.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.ToTable("CompanyProfiles");
+                });
+
+            modelBuilder.Entity("POS.Data.Consignee", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BillingAddressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("BusinessType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ConsigneeAddressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConsigneeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConsigneeProfile")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactPerson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fax")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUnsubscribe")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsVarified")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MobileNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ShippingAddressId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Website")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillingAddressId");
+
+                    b.HasIndex("ConsigneeAddressId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.HasIndex("ShippingAddressId");
+
+                    b.ToTable("Consignee", "logistics");
+                });
+
+            modelBuilder.Entity("POS.Data.ConsigneeAddress", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CityName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CountryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("StateId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("StateName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("ConsigneeAddresses", "logistics");
                 });
 
             modelBuilder.Entity("POS.Data.ContactRequest", b =>
@@ -761,6 +903,146 @@ namespace POS.Domain.Migrations
                     b.ToTable("ReminderSchedulers");
                 });
 
+            modelBuilder.Entity("POS.Data.Entities.SaleOrderDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AirWayNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CollectionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan?>("CollectionReadyTime")
+                        .HasColumnType("time");
+
+                    b.Property<Guid>("ConsigneeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("Cubic")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid?>("CurrencyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CustomsValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeliveryNotes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EForm")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InvoiceNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NoOfBoxes")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PackingTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ReasonForExportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ReceivedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SaleOrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SpecialInstructions")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("VehicleTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("WeightId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal?>("WeightValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsigneeId");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("PackingTypeId");
+
+                    b.HasIndex("ReasonForExportId");
+
+                    b.HasIndex("SaleOrderID")
+                        .IsUnique();
+
+                    b.HasIndex("VehicleTypeId");
+
+                    b.HasIndex("WeightId");
+
+                    b.ToTable("SaleOrderDetail", "logistics");
+                });
+
+            modelBuilder.Entity("POS.Data.Entities.SaleOrderProductsItems", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("COO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HSCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Qty")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SaleOrderDetailId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SaleOrderDetailId");
+
+                    b.ToTable("SaleOrderProductsItems", "logistics");
+                });
+
             modelBuilder.Entity("POS.Data.Expense", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1237,6 +1519,46 @@ namespace POS.Domain.Migrations
                     b.ToTable("NewsletterSubscribers");
                 });
 
+            modelBuilder.Entity("POS.Data.PackingType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("PackingType", "logistics");
+                });
+
             modelBuilder.Entity("POS.Data.Page", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1691,6 +2013,46 @@ namespace POS.Domain.Migrations
                     b.ToTable("QuarterlyReminders");
                 });
 
+            modelBuilder.Entity("POS.Data.ReasonForExport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("ReasonForExport", "logistics");
+                });
+
             modelBuilder.Entity("POS.Data.Reminder", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1912,6 +2274,9 @@ namespace POS.Domain.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsLogisticsOrder")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSalesOrderRequest")
@@ -2615,6 +2980,46 @@ namespace POS.Domain.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("POS.Data.VehicleType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("VehicleTypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("VehicleTypes");
+                });
+
             modelBuilder.Entity("POS.Data.Warehouse", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2711,6 +3116,46 @@ namespace POS.Domain.Migrations
                     b.ToTable("WarehouseInventories");
                 });
 
+            modelBuilder.Entity("POS.Data.WeightUnit", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UnitName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.ToTable("WeightUnits");
+                });
+
             modelBuilder.Entity("POS.Data.Action", b =>
                 {
                     b.HasOne("POS.Data.User", "CreatedByUser")
@@ -2769,6 +3214,79 @@ namespace POS.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("POS.Data.Consignee", b =>
+                {
+                    b.HasOne("POS.Data.ConsigneeAddress", "BillingAddress")
+                        .WithMany()
+                        .HasForeignKey("BillingAddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.ConsigneeAddress", "ConsigneeAddress")
+                        .WithMany()
+                        .HasForeignKey("ConsigneeAddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.Customer", "Customer")
+                        .WithMany("Consignees")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.User", "DeletedByUser")
+                        .WithMany()
+                        .HasForeignKey("DeletedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("POS.Data.User", "ModifiedByUser")
+                        .WithMany()
+                        .HasForeignKey("ModifiedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.ConsigneeAddress", "ShippingAddress")
+                        .WithMany()
+                        .HasForeignKey("ShippingAddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("BillingAddress");
+
+                    b.Navigation("ConsigneeAddress");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("DeletedByUser");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("ShippingAddress");
+                });
+
+            modelBuilder.Entity("POS.Data.ConsigneeAddress", b =>
+                {
+                    b.HasOne("POS.Data.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("POS.Data.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("POS.Data.ContactRequest", b =>
@@ -2964,6 +3482,78 @@ namespace POS.Domain.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("POS.Data.Entities.SaleOrderDetail", b =>
+                {
+                    b.HasOne("POS.Data.Consignee", "Consignee")
+                        .WithMany()
+                        .HasForeignKey("ConsigneeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId");
+
+                    b.HasOne("POS.Data.PackingType", "PackingType")
+                        .WithMany()
+                        .HasForeignKey("PackingTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("POS.Data.ReasonForExport", "ReasonForExport")
+                        .WithMany()
+                        .HasForeignKey("ReasonForExportId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("POS.Data.SalesOrder", "SalesOrder")
+                        .WithOne("LogisticsSaleOrderDetail")
+                        .HasForeignKey("POS.Data.Entities.SaleOrderDetail", "SaleOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.VehicleType", "VehicleType")
+                        .WithMany()
+                        .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("POS.Data.WeightUnit", "WeightUnit")
+                        .WithMany()
+                        .HasForeignKey("WeightId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Consignee");
+
+                    b.Navigation("Currency");
+
+                    b.Navigation("PackingType");
+
+                    b.Navigation("ReasonForExport");
+
+                    b.Navigation("SalesOrder");
+
+                    b.Navigation("VehicleType");
+
+                    b.Navigation("WeightUnit");
+                });
+
+            modelBuilder.Entity("POS.Data.Entities.SaleOrderProductsItems", b =>
+                {
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("POS.Data.Entities.SaleOrderDetail", "SaleOrderDetail")
+                        .WithMany("LogisticsSaleOrderProductsItems")
+                        .HasForeignKey("SaleOrderDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("SaleOrderDetail");
+                });
+
             modelBuilder.Entity("POS.Data.Expense", b =>
                 {
                     b.HasOne("POS.Data.User", "CreatedByUser")
@@ -3133,6 +3723,17 @@ namespace POS.Domain.Migrations
                     b.Navigation("PurchaseOrder");
 
                     b.Navigation("SalesOrder");
+                });
+
+            modelBuilder.Entity("POS.Data.PackingType", b =>
+                {
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("POS.Data.Page", b =>
@@ -3331,6 +3932,17 @@ namespace POS.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Reminder");
+                });
+
+            modelBuilder.Entity("POS.Data.ReasonForExport", b =>
+                {
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
                 });
 
             modelBuilder.Entity("POS.Data.Reminder", b =>
@@ -3711,6 +4323,17 @@ namespace POS.Domain.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("POS.Data.VehicleType", b =>
+                {
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+                });
+
             modelBuilder.Entity("POS.Data.Warehouse", b =>
                 {
                     b.HasOne("POS.Data.User", "CreatedByUser")
@@ -3747,6 +4370,27 @@ namespace POS.Domain.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("POS.Data.WeightUnit", b =>
+                {
+                    b.HasOne("POS.Data.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedByUser");
+                });
+
+            modelBuilder.Entity("POS.Data.Customer", b =>
+                {
+                    b.Navigation("Consignees");
+                });
+
+            modelBuilder.Entity("POS.Data.Entities.SaleOrderDetail", b =>
+                {
+                    b.Navigation("LogisticsSaleOrderProductsItems");
                 });
 
             modelBuilder.Entity("POS.Data.Inquiry", b =>
@@ -3804,6 +4448,8 @@ namespace POS.Domain.Migrations
 
             modelBuilder.Entity("POS.Data.SalesOrder", b =>
                 {
+                    b.Navigation("LogisticsSaleOrderDetail");
+
                     b.Navigation("SalesOrderItems");
 
                     b.Navigation("SalesOrderPayments");

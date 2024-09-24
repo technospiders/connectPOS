@@ -35,5 +35,7 @@ namespace POS.Data
         public User ModifiedByUser { get; set; }
         [ForeignKey("DeletedBy")]
         public User DeletedByUser { get; set; }
+
+        public virtual ICollection<Consignee> Consignees { get; set; }
     }
 }
