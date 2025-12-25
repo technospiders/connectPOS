@@ -1,0 +1,215 @@
+<div style="width:100%;display:flex;">
+  <div id="salesOrderForInvoice">
+    <div *ngIf="companyProfile?.invoicePrintSize === 'A4'">
+      <h1>Hi! Raheel here</h1>
+
+      <div style="position:absolute;left:-15420px">
+        <div>
+          <div>
+            <div class="container" style="width:90%;margin-right:auto;margin-left:auto;">
+              <div class="brand-section">
+                <div class="row" style="display: flex;flex-wrap: wrap;">
+                  <div class="col-12" style="width: 100%;flex: 0 0 auto;">
+
+                    <div class="company-details" style="float: center;text-align: center;">
+                      <img *ngIf="!companyProfile.logoUrl" class="img-fluid" style="max-height:50px;
+                              object-position: left;" src="../../../assets/images/logo.png" />
+                      <img *ngIf="companyProfile.logoUrl" class="img-fluid" style="max-height:50px;
+                              object-position: left;" [src]="companyProfile.logoUrl" />
+                    </div>
+                    <div style="float: center;text-align: center;">
+                      <div class="col-12" style="width: 100%;flex: 0 0 auto;">
+                        <!-- <h4 class="heading" style="margin-bottom: 2px;">{{'FROM' | translate}},</h4> -->
+                        <b>{{companyProfile?.title}}</b> <br>
+                        <div style="margin-top:3px;">
+                          <div *ngIf="companyProfile?.address">
+                            <b>{{'ADDRESS' | translate}}:</b>
+                            {{companyProfile?.address}} <br>
+                          </div>
+                          <div style="margin-top: 2px;">
+                            <div *ngIf="companyProfile?.phone">
+                              <b>{{'PHONE' | translate}}:</b>
+                              {{companyProfile?.phone}} <br>
+                            </div>
+                            <div *ngIf="companyProfile?.email">
+                              <b>{{'EMAIL' | translate}}:</b>
+                              {{companyProfile?.email}}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="float: center;text-align: center;">
+                      <h3 style="margin-bottom: 0px !important;">{{'SALES_ORDER_INVOICE' | translate}}</h3>
+                      <span>{{'SALES_ORDER' | translate}}: {{salesOrderForInvoice?.orderNumber}} </span>
+                    </div>
+                    <div style="float: center;text-align: center;">
+                      <span> {{'ORDER_DATE' | translate}} :</span> {{salesOrderForInvoice?.soCreatedDate
+                      | utcToLocalTime:'shortDate'}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="body-section" style="padding-top:10px;border: 1px solid gray;margin-top:10px;">
+                <div class="row" style="display:flex;flex-wrap: wrap;">
+                  <div class="col-8" style="width:50%;flex: 0 0 auto;">
+                    <h4 class="heading" style="margin-bottom: 2px;">{{'TO' | translate}},</h4>
+                    <b>{{salesOrderForInvoice?.customer?.customerName}}</b> <br>
+                    <div *ngIf="salesOrderForInvoice.customer?.address" style="width:50%;">
+                      <span> {{salesOrderForInvoice.customer.address}} </span>
+                    </div>
+                    <div style="margin-top: 2px;">
+                      <div *ngIf="salesOrderForInvoice?.customer?.mobileNo">
+                        <b>{{'PHONE' | translate}}:</b>
+                        {{salesOrderForInvoice.customer.mobileNo}} <br>
+                      </div>
+                      <div *ngIf="salesOrderForInvoice.customer?.email">
+                        <b>{{'EMAIL' | translate}}:</b>
+                        {{salesOrderForInvoice.customer?.email}}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="body-section">
+                <h4 class="heading">{{'SALES_ORDER_ITEMS' | translate}}</h4>
+                <table style="width: 100%; border-collapse: collapse;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid #000;">
+                      <th>{{'NO.' | translate}}</th>
+                      <th>{{'DESCRIPTION' | translate}}</th>
+                      <th>{{'QTY' | translate}}</th>
+                      <!-- <th>{{'PRICE' | translate}}</th> -->
+                      <th>{{'TOTAL' | translate}}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of salesOrderItems; let i = index" style="border-bottom: 1px dashed #000;">
+                      <td>{{i + 1}}</td>
+                      <td>{{item.productName}}</td>
+                      <td>{{item.quantity}}</td>
+                      <!-- <td>{{item.unitPrice | customCurrency}}</td> -->
+                      <td>{{(item.quantity * item.unitPrice) | customCurrency}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: right;">{{'TOTAL' | translate}}</td>
+                      <td>{{salesOrderForInvoice.totalAmount | customCurrency}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: right;">{{'PAID' | translate}}</td>
+                      <td>{{salesOrderForInvoice.totalPaidAmount | customCurrency}}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: right;">{{'BALANCE' | translate}}</td>
+                      <td>{{(salesOrderForInvoice.totalAmount - salesOrderForInvoice.totalPaidAmount) | customCurrency}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div *ngIf="salesOrderForInvoice.termAndCondition">
+                  <h5>{{'TERM_AND_CONDITION' | translate}}:</h5>
+                  <p>{{salesOrderForInvoice.termAndCondition}}</p>
+                </div>
+                <div *ngIf="salesOrderForInvoice.note">
+                  <h5>{{'NOTE' | translate}}:</h5>
+                  <p>{{salesOrderForInvoice.note}}</p>
+                </div>
+                <div class="signature-section">
+                  <div>{{'PAYMENT_STATUS' | translate}}: {{salesOrderForInvoice.paymentStatus | paymentStatus}}</div>
+                  <div class="signature">___________________________<br>{{'AUTHORIZED_SIGNATURE' | translate}}</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="companyProfile?.invoicePrintSize === 'TP80mm'" class="TP80mm">
+      <div class="print-page">
+        <div class="header">
+          <div class="center-section">
+            <img *ngIf="!companyProfile.logoUrl" class="img-fluid" style="max-height:50px; margin-bottom: 10px;"
+              src="../../../assets/images/logo.png" />
+            <img *ngIf="companyProfile.logoUrl" class="img-fluid" style="max-height:50px;  margin-bottom: 10px;" [src]="companyProfile.logoUrl" />
+          </div>
+          <div class="company-details">
+            <b>{{companyProfile?.title}}</b> <br>
+            {{'ADDRESS' | translate}}: {{companyProfile?.address}} <br>
+            {{'PHONE' | translate}}: {{companyProfile?.phone}}
+            <!-- <br>{{'EMAIL' | translate}}: {{companyProfile?.email}} -->
+          </div>
+          <div class="dotted-line"></div>
+          <!-- <h3>{{'SALES_ORDER_INVOICE' | translate}}</h3> -->
+
+        </div>
+
+        <div class="center-section">
+          <p>{{'SALES_ORDER' | translate}}: {{salesOrderForInvoice?.orderNumber}} - {{'ORDER_DATE' | translate}}:
+            {{salesOrderForInvoice?.soCreatedDate | utcToLocalTime:'shortDate'}}</p>
+        </div>
+        <div class="dotted-line"></div>
+
+
+        <div class="">
+          <h4 class="m0"> <b> {{'Customer' | translate}} :</b> {{salesOrderForInvoice?.customer?.customerName}}</h4>
+          <p class="m0"> {{salesOrderForInvoice.customer?.address}} </p>
+          <p class="m0"> {{'PHONE' | translate}}: {{salesOrderForInvoice.customer?.mobileNo}} </p>
+          <p class=""> {{'ADDRESS' | translate}}: {{salesOrderForInvoice.customer?.address}}</p>
+        </div>
+
+        <div class="body-section">
+          <!-- <h4>{{'SALES_ORDER_ITEMS' | translate}}</h4> -->
+          <table>
+            <thead>
+              <tr>
+                <th>{{'NO.' | translate}}</th>
+                <th>{{'DESCRIPTION' | translate}}</th>
+                <th>{{'PRICE' | translate}}</th>
+                <th>{{'QTY' | translate}}</th>
+                <th>{{'TOTAL' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of salesOrderItems; let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{item.productName}}</td>
+                <td>{{item.unitPrice}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{(item.quantity * item.unitPrice) | customCurrency}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" style="text-align: right;">{{'TOTAL' | translate}}</td>
+                <td>{{salesOrderForInvoice.totalAmount | customCurrency}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" style="text-align: right;">{{'PAID' | translate}}</td>
+                <td>{{salesOrderForInvoice.totalPaidAmount | customCurrency}}</td>
+              </tr>
+              <tr>
+                <td colspan="4" style="text-align: right;">{{'BALANCE' | translate}}</td>
+                <td>{{(salesOrderForInvoice.totalAmount - salesOrderForInvoice.totalPaidAmount) | customCurrency}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="body-section">
+          <!-- <h5>{{'TERM_AND_CONDITION' | translate}}</h5>
+          <p>{{salesOrderForInvoice.termAndCondition}}</p> -->
+          <h5>{{'NOTE' | translate}}</h5>
+          <p>{{salesOrderForInvoice.note}}</p>
+        </div>
+
+        <div class="signature-section">
+          <div>{{'PAYMENT_STATUS' | translate}}: {{salesOrderForInvoice.paymentStatus | paymentStatus}}</div>
+          <!-- <div class="signature">___________________________<br>{{'AUTHORIZED_SIGNATURE' | translate}}</div> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
