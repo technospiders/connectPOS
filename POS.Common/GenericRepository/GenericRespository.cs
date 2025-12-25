@@ -16,8 +16,7 @@ namespace POS.Common.GenericRepository
         protected readonly TContext Context;
         internal readonly DbSet<TC> DbSet;
         protected IUnitOfWork<TContext> _uow;
-        protected GenericRepository(IUnitOfWork<TContext> uow
-            )
+        protected GenericRepository(IUnitOfWork<TContext> uow)
         {
             Context = uow.Context;
             this._uow = uow;

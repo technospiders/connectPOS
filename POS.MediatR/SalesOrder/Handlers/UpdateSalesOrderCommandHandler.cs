@@ -130,6 +130,33 @@ namespace POS.MediatR.Handlers
                 c.CreatedDate = DateTime.UtcNow;
             });
 
+
+            // Update logistics details
+            if (salesOrderExit.IsLogisticsOrder)
+            {
+                if (salesOrderUpdate.LogisticsSaleOrderDetail != null)
+                {
+                    // If SaleOrderDetail exists, update it
+                    var saleOrderDetail = salesOrderExit.LogisticsSaleOrderDetail;
+                    _mapper.Map(request.LogisticsSaleOrderDetail, saleOrderDetail);
+
+                    // Update or add SaleOrderProductsItems under SaleOrderDetail
+                    foreach (var productItem in request.LogisticsSaleOrderProductsItems)
+                    {
+                        var existingProductItem = saleOrderDetail.LogisticsSaleOrderProductsItems.FirstOrDefault(p => p.Id == productItem.Id);
+                        if (existingProductItem != null)
+                        {
+                            _mapper.Map(productItem, existingProductItem); // Update existing product item
+                        }
+                        else
+                        {
+                            var newProductItem = _mapper.Map<SaleOrderProductsItems>(productItem);
+                            saleOrderDetail.LogisticsSaleOrderProductsItems.Add(newProductItem); // Add new product item
+                        }
+                    }
+                }
+            }
+
             _salesOrderRepository.Update(salesOrderExit);
 
             var inventories = request.SalesOrderItems

@@ -89,13 +89,14 @@ namespace POS.API
                         builder.WithOrigins("http://localhost:4000",
                                             "http://localhost:4200",
                                              "http://localhost:4201",
-                                             "https://flylinkcourier.technospiders.net",
-                                             "https://foodiebites.technospiders.net",
-                                             "https://www.foodiebites.technospiders.net",
-                                             "http://foodiebites.technospiders.net",
-                                             "http://www.foodiebites.technospiders.net",
                                              "https://localhost:44300/",
-                                             "http://localhost:44300/"
+                                             "http://localhost:44300/",
+
+                                             "https://flylinkcourier.technospiders.net",
+                                             "https://connectpos.raheelaftab.com",  // testapi.raheelaftab.com
+                                             "https://almonas.technospiders.net", // almonas-api.technospiders.net
+                                             "https://huzaifatraders.technospiders.net",
+                                             "https://foodiebites.technospiders.net"
                                          )
                                .WithExposedHeaders("X-Pagination")
                                .AllowAnyHeader()

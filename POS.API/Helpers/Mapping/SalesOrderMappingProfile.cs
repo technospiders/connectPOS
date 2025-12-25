@@ -3,6 +3,7 @@ using POS.Data.Dto;
 using POS.Data.Entities;
 using POS.Data;
 using POS.MediatR.CommandAndQuery;
+using POS.MediatR.SalesOrder.Commands;
 
 namespace POS.API.Helpers.Mapping
 {
@@ -16,8 +17,15 @@ namespace POS.API.Helpers.Mapping
                 //.ForMember(dest => dest.LogisticsSaleOrderDetail.LogisticsSaleOrderProductsItems, opt => opt.MapFrom(src => src.LogisticsSaleOrderProductsItems))
                 .ForMember(dest => dest.SalesOrderItems, opt => opt.MapFrom(src => src.SalesOrderItems));
 
+            // Mapping UpdateSalesOrderCommand to SalesOrder entity
+            CreateMap<UpdateSalesOrderCommand, SalesOrder>()
+                .ForMember(dest => dest.LogisticsSaleOrderDetail, opt => opt.MapFrom(src => src.LogisticsSaleOrderDetail)) // Mapping SaleOrderDetail
+                .ForMember(dest => dest.SalesOrderItems, opt => opt.MapFrom(src => src.SalesOrderItems));
+
             // Mapping SaleOrderDetailDto to SaleOrderDetail entity
-            CreateMap<SaleOrderDetailDto, SaleOrderDetail>();
+            CreateMap<SaleOrderDetailDto, SaleOrderDetail>()
+                .ForMember(dest => dest.LogisticsSaleOrderProductsItems, opt => opt.MapFrom(src => src.LogisticsSaleOrderProductsItems)); // Mapping nested products
+
 
             // Mapping SaleOrderProductsItemsDto to SaleOrderProductsItems entity
             CreateMap<SaleOrderProductsItemsDto, SaleOrderProductsItems>();
